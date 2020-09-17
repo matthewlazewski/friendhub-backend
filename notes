@@ -17,5 +17,6 @@ Likes
 
 Posts
 -user_id
+-has_many users through comments 
 -has many likes 
 -has many comments 

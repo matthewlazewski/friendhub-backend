@@ -1,0 +1,21 @@
+User
+-has many Posts
+-has many Friends
+-has many Likes
+-has many Comments 
+    :name - string, :email - string, :password_digest - string, :workplace - string, :profile_picture - string, :birthday - date, :uid - string
+
+Comments
+-user_id
+-post_id
+
+
+Likes
+-post_id
+-belongs to User 
+
+
+Posts
+-user_id
+-has many likes 
+-has many comments 

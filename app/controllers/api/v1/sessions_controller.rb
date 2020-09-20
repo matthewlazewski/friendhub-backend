@@ -1,4 +1,4 @@
-class API::V1::SessionsController < ApplicationController
+class Api::V1::SessionsController < ApplicationController
     def create
         @user = User.find_by(email: session_params[:email])
       
@@ -15,7 +15,7 @@ class API::V1::SessionsController < ApplicationController
           }
         end
     end
-    
+
     def is_logged_in?
         if logged_in? && current_user
           render json: {

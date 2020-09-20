@@ -1,4 +1,4 @@
-class API::V1::LikesController < ApplicationController
+class Api::V1::LikesController < ApplicationController
     def index 
         likes = Post.find(params[:post_id])
         render json: likes 

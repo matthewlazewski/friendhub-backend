@@ -2,19 +2,14 @@ class Api::V1::PostsController < ApplicationController
 
     def index 
         posts = Post.all
-        
+        render json: PostSerializer.new(posts)
     end
 
     def create
         post = Post.new(post_params)
-        # if params.has_key?(:user_id)
-        #     unless current_user.id == params[:user_id].to_i
-        #     @post.tagged_user = params[:user_id]
-        #     end
-        # end
 
-       post.save
-       render json: PostSerializer.new(post)
+        post.save
+        render json: PostSerializer.new(post)
     end
 
     def show

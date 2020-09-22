@@ -3,7 +3,7 @@ class Api::V1::UsersController < ApplicationController
       @users = User.all
       if @users
         render json: {
-          users: UserSerializer.new(@users).serialized_json
+          users: UserSerializer.new(@users)
         }
       else
         render json: {
@@ -17,7 +17,7 @@ class Api::V1::UsersController < ApplicationController
       @user = User.find(params[:id])
       if @user
         render json: {
-          user: UserSerializer.new(@user).serialized_json
+          user: UserSerializer.new(@user)
         }
       else
         render json: {

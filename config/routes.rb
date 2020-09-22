@@ -7,9 +7,10 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :friends
-      resources :posts
+      resources :posts do
+        resources :comments
+      end
       resources :likes
-      resources :comments
       resources :users, only: [:create, :show, :index]
     end 
   end  

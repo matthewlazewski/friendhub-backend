@@ -1,24 +1,20 @@
 class Api::V1::PostsController < ApplicationController
+
     def index 
-        @posts = Post.order(created_at: :desc)
-        .where(:author_id => Friend.active_friendships(current_user))
-        .includes(:author, :tagged, {likes: [:user]}, {comments: [:author]})
-        .order("created_at DESC")
+        posts = Post.all
+        
     end
 
     def create
-        @post = current_user.posts.new(post_params)
-        if params.has_key?(:user_id)
-            unless current_user.id == params[:user_id].to_i
-            @post.tagged_user = params[:user_id]
-            end
-        end
+        post = Post.new(post_params)
+        # if params.has_key?(:user_id)
+        #     unless current_user.id == params[:user_id].to_i
+        #     @post.tagged_user = params[:user_id]
+        #     end
+        # end
 
-        if @post.save
-                render :show
-            else
-                render json: @post.errors, status: 422
-        end
+       post.save
+       render json: PostSerializer.new(post)
     end
 
     def show
@@ -52,6 +48,6 @@ class Api::V1::PostsController < ApplicationController
     private
     
     def post_params
-        params.require(:post).permit(:body, :image)
+        params.require(:post).permit(:body)
     end
 end

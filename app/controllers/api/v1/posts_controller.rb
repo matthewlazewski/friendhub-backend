@@ -7,9 +7,18 @@ class Api::V1::PostsController < ApplicationController
 
     def create
         post = Post.new(post_params)
-
-        post.save
-        render json: PostSerializer.new(post)
+    
+        if post.save
+          render json: {
+            status: :created,
+            post: PostSerializer.new(post)
+          }
+        else 
+          render json: {
+            status: 500,
+            errors: post.errors.full_messages
+          }
+        end
     end
 
     def show

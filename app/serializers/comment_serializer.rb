@@ -3,4 +3,4 @@ class CommentSerializer < BaseSerializer
   
     belongs_to :post
     belongs_to :user
-  end
+end

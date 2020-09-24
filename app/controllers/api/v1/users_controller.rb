@@ -31,9 +31,12 @@ class Api::V1::UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       login!
+      options = {
+        include: [:posts,:comments]
+      }
       render json: {
         status: :created,
-        user: @user
+        user: UserSerializer.new(@user, options)
       }
     else 
       render json: {

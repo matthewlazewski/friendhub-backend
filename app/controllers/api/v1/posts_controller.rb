@@ -40,12 +40,12 @@ class Api::V1::PostsController < ApplicationController
     end
 
     def destroy
-        @post = Post.find(params[:id])
+        post = Post.find(params[:id])
 
-        if @post.destroy
-            render :show
+        if post.destroy
+            render json: {message: "Deleted Post #{post.content}"}
         else
-            render json: @post.errors.full_messages, status: 422
+            render json: {error: 'Could not be destroyed'}
         end
     end
 

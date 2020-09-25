@@ -1,5 +1,8 @@
 class CommentSerializer < BaseSerializer
-    attributes :content
+    attribute :content
+    attribute :author do |comment|
+      comment.user.try(:name)
+    end
   
     belongs_to :post
     belongs_to :user

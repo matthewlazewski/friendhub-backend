@@ -1,5 +1,8 @@
 class PostSerializer < BaseSerializer
-    attributes :body
+    attributes :body 
+    attribute :author do |post|
+      post.user.try(:name)
+    end
   
     belongs_to :user
     has_many :comments

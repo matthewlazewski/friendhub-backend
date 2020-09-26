@@ -43,7 +43,7 @@ class Api::V1::PostsController < ApplicationController
         post = Post.find(params[:id])
 
         if post.destroy
-            render json: {message: "Deleted Post #{post.content}"}
+            render json: {message: "Deleted Post"}
         else
             render json: {error: 'Could not be destroyed'}
         end

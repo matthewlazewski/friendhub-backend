@@ -1,11 +1,13 @@
 class Api::V1::LikesController < ApplicationController
+    before_action :find_post
+
     def index 
         likes = Post.find(params[:post_id])
         render json: likes 
     end
 
     def create
-        like = current_user.likes.new(post_id: params[:post_id])
+        @post.likes.create(user_id: current_user.id)
         render json: like 
     end
 
@@ -17,5 +19,11 @@ class Api::V1::LikesController < ApplicationController
         else 
             render json: like.errors, status: 404
         end
+    end
+
+    private 
+
+    def find_post
+        @post = Post.find(params[:post_id])
     end
 end

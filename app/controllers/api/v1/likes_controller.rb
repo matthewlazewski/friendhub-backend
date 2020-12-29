@@ -1,18 +1,22 @@
 class Api::V1::LikesController < ApplicationController
-    before_action :find_post
+    # before_action :find_post
 
     def index 
-        likes = Post.find(params[:post_id])
-        render json: likes 
+        likes = Like.all
+        render json: LikeSerializer.new(likes)
     end
 
     def create
-        if already_liked?
-            flash[:notice] = "You already liked this"
-        else 
-            @post.likes.create(user_id: current_user.id)
-        end 
-        render json: like 
+        if like.save
+            render json:{ 
+                like: LikeSerializer.new(like)
+            }
+        else
+            render json: {
+                status: 500,
+                errors: comment.errors.full_messages
+            }
+        end
     end
 
     def destroy 
@@ -28,11 +32,11 @@ class Api::V1::LikesController < ApplicationController
     private 
 
     def find_post
-        @post = Post.find(params[:post_id])
+        @post = Post.find(params[:post_id]) 
     end
 
     def already_liked?
-        Like.where(user_id: current_user.id, post_id)
+        Like.where(user_id: current_user.id, post: post_id)
         params[:post_id].exists?
     end
 end

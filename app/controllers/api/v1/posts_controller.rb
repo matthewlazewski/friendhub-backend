@@ -24,7 +24,9 @@ class Api::V1::PostsController < ApplicationController
     def show
         @post = Post.find(params[:id])
         if @post
-            render :show
+            render json: {
+                post: PostSerializer.new(@post)
+            }
         else
             render json: ["post not found"], status: 404
         end

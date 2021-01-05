@@ -6,7 +6,7 @@ class Api::V1::LikesController < ApplicationController
     end
 
     def create
-        @like = current_user.likes.new(post_id: params[:post_id])
+        @like = Like.new(post_id: params[:post_id])
         if @like.save
             render json:{ 
                 like: LikeSerializer.new(@like)
@@ -14,7 +14,7 @@ class Api::V1::LikesController < ApplicationController
         else
             render json: {
                 status: 500,
-                errors: comment.errors.full_messages
+                errors: @like.errors.full_messages
             }
         end
     end

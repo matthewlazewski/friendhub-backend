@@ -12,7 +12,9 @@ Rails.application.routes.draw do
       end
       resources :comments
       resources :likes
-      resources :users, only: [:create, :show, :index]
+      resources :users do
+        resource :likes
+      end
     end 
   end  
 end

@@ -6,16 +6,17 @@ class Api::V1::LikesController < ApplicationController
     end
 
     def create
-        @like = Like.new(post_id: params[:post_id])
+        params[:like][:user_id] = current_user.id
+        @like = Like.new(like_params)
         if @like.save
-            render json:{ 
-                like: LikeSerializer.new(@like)
-            }
+            render json: LikeSerializer.new(@like)
         else
-            render json: {
-                status: 500,
-                errors: @like.errors.full_messages
-            }
+            flash[:alert] = @like.errors.full_messages.join(', ')
         end
+    end
+
+    protected 
+    def like_params
+        params.require(:like).permit(:user_id, :post_id)
     end
 end
